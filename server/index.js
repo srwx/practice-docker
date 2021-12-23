@@ -1,23 +1,18 @@
-const { MongoClient } = require("mongodb")
-require("dotenv").config()
+// libs
+const express = require("express")
+// routes
+const postRoute = require("./routes/post")
+// port
+const PORT = process.env.PORT || 3001
 
-// Connection URI
-const url = process.env.DB_URI
-const client = new MongoClient(url)
+const app = express()
 
-// Database name
-const dbName = process.env.DB_NAME
+// Middlewares
+app.use(express.json()) // Parse JSON in req.body to object. (Used in POST, PUT method for gain req.body)
 
-async function dbConnect() {
-  try {
-    await client.connect()
-    console.log("Connect to MongoDB success.")
-    const db = client.db(dbName)
-    const data = await db.collection("post").findOne({ name: "wong" })
-    console.log(data)
-  } catch (err) {
-    console.log(err)
-  }
-}
+// API Routes
+app.use("/api/post", postRoute)
 
-dbConnect()
+app.listen(PORT, () => {
+  console.log(`listening at PORT ${PORT}...`)
+})
