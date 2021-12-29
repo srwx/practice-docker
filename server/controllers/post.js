@@ -2,11 +2,25 @@
 const { ObjectId } = require("mongodb") // Function used to convert string to ObjectID
 const dbConnect = require("../libs/dbConnect")
 
-// GET method
-module.exports.getPost = async (req, res) => {
+// GET method (Get all posts)
+module.exports.getAllPosts = async (req, res) => {
   try {
     const db = await dbConnect()
-    const data = await db.collection("post").findOne({ name: "wong" })
+    const data = await db.collection("post").find({}).toArray()
+    res.status(200).json({ txt: "GET from post API", data })
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ success: false })
+  }
+}
+
+// GET method (Get post with specific id)
+module.exports.getPost = async (req, res) => {
+  try {
+    const id = req.params.id
+    const objId = ObjectId(id)
+    const db = await dbConnect()
+    const data = await db.collection("post").findOne({ _id: objId })
     res.status(200).json({ txt: "GET from post API", data })
   } catch (err) {
     console.log(err)

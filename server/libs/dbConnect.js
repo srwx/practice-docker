@@ -15,6 +15,7 @@ async function dbConnect() {
     const db = client.db(dbName)
     return db
   } catch (err) {
+    console.log(`Cannot connect to db.`)
     console.log(err)
   }
 }

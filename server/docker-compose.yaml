@@ -5,22 +5,23 @@ services:
     image: mongo
     container_name: mongodb
     ports:
-      - 27017:27017
+      - 27018:27017 # Connect with MongoDBCompass using "mongodb://admin:password@localhost:27018"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
     networks:
       - mongodb_network
+
   mongodb-express:
     image: mongo-express
     container_name: mongodb-express
     ports:
-      - 8081:8081
+      - 8081:8081 # HOST:CONTAINER
     environment:
       - ME_CONFIG_MONGODB_SERVER=mongodb
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
-    restart: always # fixes MongoNetworkError when mongodb is not ready when mongo-express starts
+    restart: always # fixes MongoNetworkError when mongo-express starts but mongodb is not ready
     networks:
       - mongodb_network
 
