@@ -1,19 +1,15 @@
+# ====================== This file is base file (all enviroments here use both Development and Production) ======================
 version: "3"
 
 services:
   node-app:
     build: .
     ports:
-      - 3001:3001
-    # environment:
-    #   - PORT=3001
-    #   - DB_URI=mongodb://admin:password@localhost:27018
-    #   - DB_NAME=docker-practice
-    # Define enviroment variables from .env file
-    env_file:
-      - ./.env
-    volumes:
-      - ./:/wong/src
+      - 3001:3001 # In this project, both dev. and prod. use same port. (If dev. and prod. not used same port, you should write port for docker-compose.dev.yaml and docker-compose.prod.yaml)
+    environment:
+      - PORT=3001
+      - DB_URI=mongodb://admin:password@mongodb:27017
+      - DB_NAME=docker-practice
     networks:
       - mongodb_network
 
@@ -25,19 +21,6 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
-    networks:
-      - mongodb_network
-
-  mongodb-express:
-    image: mongo-express
-    container_name: mongodb-express
-    ports:
-      - 8081:8081 # HOST:CONTAINER
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
-    restart: always # fixes MongoNetworkError when mongo-express starts but mongodb is not ready
     networks:
       - mongodb_network
 

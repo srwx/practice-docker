@@ -1,0 +1,15 @@
+# For override base docker compose file (docker-compose.yaml) in production mode.
+# Run base docker-compose + prod docker-compose with command : docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up
+
+version: "3"
+
+services:
+  node-app:
+    # Override build in base file
+    build:
+      context: . # Dockerfile directory
+      args:
+        NODE_ENV: production # ENV for build time (used NODE_ENV only in Dockerfile)
+    environment:
+      - NODE_ENV=production # ENV for run time (used NODE_ENV in container, .js file (process.env.NODE_ENV))
+    command: node index.js

@@ -1,0 +1,29 @@
+# For override base docker compose file (docker-compose.yaml) in development mode.
+# Run base docker-compose + dev docker-compose with command : docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml up
+version: "3"
+
+services:
+  node-app:
+    # Override build in base file
+    build:
+      context: . # Dockerfile directory
+      args:
+        NODE_ENV: development # ENV for build time (used NODE_ENV only in Dockerfile)
+    volumes:
+      - ./:/wong/src # Volume bind mounth
+    environment:
+      - NODE_ENV=development # ENV for run time (used NODE_ENV in container, .js file (process.env.NODE_ENV))
+    command: npm run dev # Override CMD in Dockerfile.
+
+  mongodb-express:
+    image: mongo-express
+    container_name: mongodb-express
+    ports:
+      - 8081:8081 # HOST:CONTAINER
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+    restart: always # fixes MongoNetworkError when mongo-express starts but mongodb is not ready
+    networks:
+      - mongodb_network
