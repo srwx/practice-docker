@@ -1,6 +1,18 @@
 version: "3"
 
 services:
+  node-app:
+    build: .
+    ports:
+      - 3001:3001
+    environment:
+      - PORT=3001
+    # Define enviroment variables from .env file
+    # env_file:
+    #   - ./.env
+    volumes:
+      - ./:/wong/src
+
   mongodb:
     image: mongo
     container_name: mongodb

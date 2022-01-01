@@ -1,12 +1,11 @@
 const { MongoClient } = require("mongodb")
-require("dotenv").config()
 
 // Connection URI
-const url = process.env.DB_URI
+const url = "mongodb://admin:password@localhost:27018"
 const client = new MongoClient(url)
 
 // Database name
-const dbName = process.env.DB_NAME
+const dbName = "docker-practice"
 
 async function dbConnect() {
   try {
