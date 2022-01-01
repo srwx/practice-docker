@@ -5,13 +5,17 @@ services:
     build: .
     ports:
       - 3001:3001
-    environment:
-      - PORT=3001
+    # environment:
+    #   - PORT=3001
+    #   - DB_URI=mongodb://admin:password@localhost:27018
+    #   - DB_NAME=docker-practice
     # Define enviroment variables from .env file
-    # env_file:
-    #   - ./.env
+    env_file:
+      - ./.env
     volumes:
       - ./:/wong/src
+    networks:
+      - mongodb_network
 
   mongodb:
     image: mongo

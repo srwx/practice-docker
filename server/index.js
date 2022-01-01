@@ -15,7 +15,7 @@ app.use("/api/post", postRoute)
 
 // =========================== For test ===========================
 app.get("/", (req, res) => {
-  res.send(`${process.env.PORT}`)
+  res.send(`${process.env.PORT} ${process.env.DB_URI} ${process.env.DB_NAME}`)
 })
 // ================================================================
 

@@ -1,11 +1,11 @@
 const { MongoClient } = require("mongodb")
 
 // Connection URI
-const url = "mongodb://admin:password@localhost:27018"
+const url = process.env.DB_URI
 const client = new MongoClient(url)
 
 // Database name
-const dbName = "docker-practice"
+const dbName = process.env.DB_NAME
 
 async function dbConnect() {
   try {
