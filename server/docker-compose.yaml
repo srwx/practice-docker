@@ -21,8 +21,13 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - practice-docker_mongodb:/data/db # persist data in db after ran command "docker-compose down"
     networks:
       - mongodb_network
+
+volumes:
+  practice-docker_mongodb:
 
 networks:
   mongodb_network:
