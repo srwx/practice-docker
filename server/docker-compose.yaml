@@ -12,6 +12,8 @@ services:
       - DB_NAME=docker-practice
     networks:
       - mongodb_network
+    depends_on:
+      - mongodb # Start node-app after mongodb is started.
 
   mongodb:
     image: mongo

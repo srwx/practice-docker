@@ -14,8 +14,8 @@ async function dbConnect() {
     const db = client.db(dbName)
     return db
   } catch (err) {
-    console.log(`Cannot connect to db.`)
     console.log(err)
+    setTimeout(dbConnect, 3000) // Run this function again after 3 sec. (If node container started but mongo not ready, then try to connect to db again.)
   }
 }
 
