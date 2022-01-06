@@ -7,7 +7,7 @@ module.exports.getAllPosts = async (req, res) => {
   try {
     const db = await dbConnect()
     const data = await db.collection("post").find({}).toArray()
-    res.status(200).json({ txt: "GET from post API", data })
+    res.status(200).json({ success: true, data })
   } catch (err) {
     console.log(err)
     res.status(500).json({ success: false })
@@ -21,7 +21,7 @@ module.exports.getPost = async (req, res) => {
     const objId = ObjectId(id)
     const db = await dbConnect()
     const data = await db.collection("post").findOne({ _id: objId })
-    res.status(200).json({ txt: "GET from post API", data })
+    res.status(200).json({ success: true, data })
   } catch (err) {
     console.log(err)
     res.status(500).json({ success: false })
@@ -34,7 +34,7 @@ module.exports.createPost = async (req, res) => {
     const data = req.body
     const db = await dbConnect()
     db.collection("post").insertOne(data)
-    res.status(200).json({ txt: "CREATE from post API", data })
+    res.status(200).json({ success: true, data })
   } catch (err) {
     console.log(err)
     res.status(500).json({ success: false })
@@ -48,8 +48,14 @@ module.exports.updatePost = async (req, res) => {
     const objId = ObjectId(id)
     const newData = req.body
     const db = await dbConnect()
-    db.collection("post").findOneAndUpdate({ _id: objId }, { $set: newData })
-    res.status(200).json({ txt: `UPDATE from post API, ID: ${id}` })
+    await db
+      .collection("post")
+      .findOneAndUpdate(
+        { _id: objId },
+        { $set: newData },
+        { returnDocument: true }
+      )
+    res.status(200).json({ success: true })
   } catch (err) {
     console.log(err)
     res.status(500).json({ success: false })
@@ -63,7 +69,7 @@ module.exports.deletePost = async (req, res) => {
     const objId = ObjectId(id)
     const db = await dbConnect()
     db.collection("post").findOneAndDelete({ _id: objId })
-    res.status(200).json({ txt: `DELETE from post API, ID: ${id}` })
+    res.status(200).json({ success: true })
   } catch (err) {
     console.log(err)
     res.status(500).json({ success: false })

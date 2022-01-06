@@ -1,3 +1,6 @@
+// Use db in container
+//   1. docker exec -it [MONGO_CONTAINER] bash
+//   2. mongo -u "admin" -p "password"
 const { MongoClient } = require("mongodb")
 
 // Connection URI
