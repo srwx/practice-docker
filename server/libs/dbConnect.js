@@ -2,13 +2,19 @@
 //   1. docker exec -it [MONGO_CONTAINER] bash
 //   2. mongo -u "admin" -p "password"
 const { MongoClient } = require("mongodb")
+const {
+  MONGO_USER,
+  MONGO_PASSWORD,
+  MONGO_IP,
+  MONGO_PORT,
+} = require("../config")
 
 // Connection URI
-const url = process.env.DB_URI
+const url = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}`
 const client = new MongoClient(url)
 
 // Database name
-const dbName = process.env.DB_NAME
+const dbName = "docker-practice"
 
 async function dbConnect() {
   try {

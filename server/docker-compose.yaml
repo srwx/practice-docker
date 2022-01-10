@@ -8,8 +8,6 @@ services:
       - 3001:3001 # In this project, both dev. and prod. use same port. (If dev. and prod. not used same port, you should write port for docker-compose.dev.yaml and docker-compose.prod.yaml)
     environment:
       - PORT=3001
-      - DB_URI=mongodb://admin:password@mongodb:27017
-      - DB_NAME=docker-practice
     networks:
       - mongodb_network
     depends_on:

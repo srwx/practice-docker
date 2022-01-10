@@ -13,6 +13,8 @@ services:
       - ./:/wong/src # Volume bind mounth
       - /wong/src/node_modules # Prevent node_modules folder from volume bind mounth (Bind mounth can't override node_modules) (Prevent in case local don't have node_modules folder)
     environment:
+      - MONGO_USER=admin
+      - MONGO_PASSWORD=password
       - NODE_ENV=development # ENV for run time (used NODE_ENV in container, .js file (process.env.NODE_ENV))
     command: npm run dev # Override CMD in Dockerfile.
 
