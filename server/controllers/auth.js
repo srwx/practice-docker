@@ -31,6 +31,7 @@ module.exports.signin = async (req, res) => {
       res
         .status(404)
         .json({ success: false, message: "This username not found" })
+      return
     }
 
     // Decode password
