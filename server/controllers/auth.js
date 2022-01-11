@@ -37,10 +37,10 @@ module.exports.signin = async (req, res) => {
     // Decode password
     const checkPassword = await bcrypt.compare(password, user.password)
     if (checkPassword) {
-      req.session.user = { userId: user._id, username }
+      req.session.user = { userId: ObjectId(user._id).toString(), username }
       res
         .status(200)
-        .json({ success: true, userId: ObjectId(user.insertedId).toString() })
+        .json({ success: true, userId: ObjectId(user._id).toString() })
     } else {
       res.status(400).json({
         success: false,
