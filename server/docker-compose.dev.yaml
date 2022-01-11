@@ -15,6 +15,7 @@ services:
     environment:
       - MONGO_USER=admin
       - MONGO_PASSWORD=password
+      - REDIS_SESSION_SECRET=secret
       - NODE_ENV=development # ENV for run time (used NODE_ENV in container, .js file (process.env.NODE_ENV))
     command: npm run dev # Override CMD in Dockerfile.
 

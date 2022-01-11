@@ -11,6 +11,7 @@ module.exports.signup = async (req, res) => {
     const user = await db
       .collection("user")
       .insertOne({ username, password: hashedPassword })
+    req.session.user = { userId: user._id, username }
     res
       .status(201)
       .json({ success: true, userId: ObjectId(user.insertedId).toString() })
@@ -28,15 +29,15 @@ module.exports.signin = async (req, res) => {
     const user = await db.collection("user").findOne({ username })
     if (!user) {
       // This username not found in db
-      res
+      return res
         .status(404)
         .json({ success: false, message: "This username not found" })
-      return
     }
 
     // Decode password
     const checkPassword = await bcrypt.compare(password, user.password)
     if (checkPassword) {
+      req.session.user = { userId: user._id, username }
       res
         .status(200)
         .json({ success: true, userId: ObjectId(user.insertedId).toString() })

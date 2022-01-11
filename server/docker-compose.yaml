@@ -26,6 +26,12 @@ services:
     networks:
       - mongodb_network
 
+  redis:
+    image: redis
+    container_name: redis
+    networks:
+      - mongodb_network
+
 volumes:
   practice-docker_mongodb:
 
