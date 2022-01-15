@@ -11,7 +11,11 @@ module.exports.signup = async (req, res) => {
     const user = await db
       .collection("user")
       .insertOne({ username, password: hashedPassword })
-    req.session.user = { userId: user._id, username }
+    const userId = ObjectId(user.insertedId).toString()
+    req.session.user = {
+      userId,
+      username,
+    }
     res
       .status(201)
       .json({ success: true, userId: ObjectId(user.insertedId).toString() })

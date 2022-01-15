@@ -27,7 +27,7 @@ services:
       - mongodb_network
 
   redis:
-    image: redis
+    image: redis:6.2.6-alpine
     container_name: redis
     networks:
       - mongodb_network

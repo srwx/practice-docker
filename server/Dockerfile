@@ -1,4 +1,4 @@
-FROM node
+FROM node:17.3.1-alpine3.14
 
 #-p is used for make parent folder if that folder not exist
 RUN mkdir -p /wong/src 
