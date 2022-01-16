@@ -12,10 +12,7 @@ module.exports.signup = async (req, res) => {
       .collection("user")
       .insertOne({ username, password: hashedPassword })
     const userId = ObjectId(user.insertedId).toString()
-    req.session.user = {
-      userId,
-      username,
-    }
+    req.session.user = { userId, username }
     res
       .status(201)
       .json({ success: true, userId: ObjectId(user.insertedId).toString() })
@@ -41,10 +38,9 @@ module.exports.signin = async (req, res) => {
     // Decode password
     const checkPassword = await bcrypt.compare(password, user.password)
     if (checkPassword) {
-      req.session.user = { userId: ObjectId(user._id).toString(), username }
-      res
-        .status(200)
-        .json({ success: true, userId: ObjectId(user._id).toString() })
+      const userId = ObjectId(user._id).toString()
+      req.session.user = { userId, username }
+      res.status(200).json({ success: true, userId })
     } else {
       res.status(400).json({
         success: false,
