@@ -3,6 +3,7 @@ const express = require("express")
 const redis = require("redis")
 const session = require("express-session")
 let RedisStore = require("connect-redis")(session)
+const cors = require("cors")
 // config
 const { REDIS_URL, REDIS_PORT, REDIS_SESSION_SECRET } = require("./config")
 // routes
@@ -38,6 +39,9 @@ app.use(
     },
   })
 )
+
+app.enable("trust proxy") // Enable app to use nginx custom config (Get real client IP)
+app.use(cors()) // Enable cors (other domains (e.g. front-end) able to send request to this api app)
 
 // API Routes
 app.use("/api/post", postRoute)
