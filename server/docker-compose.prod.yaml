@@ -13,3 +13,7 @@ services:
     environment:
       - NODE_ENV=production # ENV for run time (used NODE_ENV in container, .js file (process.env.NODE_ENV))
     command: node index.js
+
+  nginx:
+    ports:
+      - "80:80"
