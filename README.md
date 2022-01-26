@@ -1,4 +1,6 @@
-## Learning about Docker and TypeScript with MERN-stack
+## Docker with MERN stack. (Also TypeScript with React.)
+
+> This project is for learning fundamental of TypeScript with React and Docker to create simple blog app.
 
 ### Client
 - Install react app with TypeScript template using command: ```npx create-react-app [folderName] --template typescript```
